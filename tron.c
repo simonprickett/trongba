@@ -98,16 +98,16 @@ int main(void) {
 		{
 			// Only sample keys every 4000 iterations to slow game down
 			if (loop == 4000) {
-				if((!((*KEYS) & KEY_UP)) && (blockY > 9)) {
+				if ((!((*KEYS) & KEY_UP)) && (blockY > 9)) {
 					dir = DIR_UP;
 				}
-				if((!((*KEYS) & KEY_DOWN)) && (blockY < 150)) {
+				if ((!((*KEYS) & KEY_DOWN)) && (blockY < 150)) {
 					dir = DIR_DOWN;
 				}
-				if((!((*KEYS) & KEY_LEFT)) && (blockX > 9)) {
+				if ((!((*KEYS) & KEY_LEFT)) && (blockX > 9)) {
 					dir = DIR_LEFT;
 				}
-				if((!((*KEYS) & KEY_RIGHT)) && (blockX < 110)) {
+				if ((!((*KEYS) & KEY_RIGHT)) && (blockX < 110)) {
 					dir = DIR_RIGHT;
 				}
 
