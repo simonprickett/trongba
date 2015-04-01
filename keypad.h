@@ -9,4 +9,4 @@
 #define KEY_R 256
 #define KEY_L 512
 
-int* KEYS = (int*)0x04000130;
+volstile int* KEYS = (int*)0x04000130;
