@@ -87,12 +87,12 @@ int main(void) {
 
 		loop = 0;
 
-		// Initial spawn point - TODO randomize this
-		blockX = 30;
-		blockY = 30;
+		// Initial random spawn point
+		blockX = 10 + (rand() % 100);
+		blockY = 10 + (rand() % 70);
 
-		// Initial movement direction - TODO randomize this
-		dir = DIR_RIGHT;
+		// Initial random movement direction
+		dir = rand() % 3;
 
 		// In game loop
 		while (1)
