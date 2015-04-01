@@ -1,10 +1,9 @@
-/**********************************************\
-*       modus.h                                *
-*          by dovotos pcx->gba program         *
-/**********************************************/
+/*
+ * Modus Create logo image data
+ */
+
 #define  modus_WIDTH   240
 #define  modus_HEIGHT  160
-
 
 const u16 modusData[] = {
                     0x1919, 0x1919, 0x1919, 0x1919, 0x1919, 0x1919, 0x1919, 0x1919, 0x1919, 0x1919,

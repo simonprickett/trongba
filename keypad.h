@@ -1,3 +1,7 @@
+/*
+ * Gameboy Advance key mappings
+ */
+
 #define KEY_A 1
 #define KEY_B 2
 #define KEY_SELECT 4
