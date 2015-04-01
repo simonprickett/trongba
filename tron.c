@@ -35,18 +35,19 @@ u16* paletteMem = (u16*)0x5000000;
 u16* videoBuffer = (u16*)0x6000000;
 
 // Draw a pixel of color c at location x, y
-void plotPixel(int x,int y, unsigned short int c) {
+void plotPixel(int x, int y, u16 c) {
 	videoBuffer[(y) *120 + (x)] = (c);
 }
 
 // Return color of pixel at location x,y
-unsigned short int getPixel(int x, int y) {
+u16 getPixel(int x, int y) {
 	return videoBuffer[(y) * 120 + (x)];
 }
 
 // Entry point
 int main(void) {
 	int x, y, blockX, blockY, loop, dir;
+	u16 whitePixel = RGB16(31, 31, 31);
 
 	// Set display mode 4
 	REG_DISPCNT = MODE_4 | BG2_ENABLE;
@@ -67,14 +68,14 @@ int main(void) {
 
 		// Draw the border around the playfield - vertical lines
 		for (y = 10; y < 150; y++) {
-			plotPixel(10, y, RGB16(31, 31, 31));
-			plotPixel(110, y, RGB16(31, 31, 31));
+			plotPixel(10, y, whitePixel);
+			plotPixel(110, y, whitePixel);
 		}
 
 		// And horizontal lines
 		for (x = 10; x < 111; x++) {
-			plotPixel(x, 10, RGB16(31, 31, 31));
-			plotPixel(x, 150, RGB16(31, 31, 31));
+			plotPixel(x, 10, whitePixel);
+			plotPixel(x, 150, whitePixel);
 		}
 
 		// Wait for game to start
@@ -131,11 +132,11 @@ int main(void) {
 
 				// Collision detection, if user hit a pixel that's
 				// already white, game ends
-				if (getPixel(blockX, blockY) == RGB16(31, 31, 31)) {
+				if (getPixel(blockX, blockY) == whitePixel) {
 					break;
 				}
 
-				plotPixel(blockX, blockY, RGB16(31, 31, 31));
+				plotPixel(blockX, blockY, whitePixel);
 				loop = 0;
 			} else {
 				loop++;
