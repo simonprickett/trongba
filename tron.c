@@ -14,8 +14,9 @@ typedef unsigned long u32;
 // Definitions for keypad register and addresses
 #include "keypad.h"
 
-// Encoded background image data
+// Encoded background and start image data
 #include "modus.h"
+#include "start.h"
 
 #define RGB16(r,g,b) ((r)+(g<<5)+(b<<10))
 
@@ -52,13 +53,33 @@ int main(void) {
 	// Set display mode 4
 	REG_DISPCNT = MODE_4 | BG2_ENABLE;
 
-	// Load the background image palette
-	for(loop = 0; loop < 256; loop++) {
-		paletteMem[loop] = modusPalette[loop];
-	}
 
 	// Infinite game loop
 	while(1) {
+		// Load the start image palette
+		for(loop = 0; loop < 256; loop++) {
+			paletteMem[loop] = startPalette[loop];
+		}
+
+		// Draw the start image
+		for(y = 0; y < 160; y++) {
+			for(x = 0; x < 120; x++) {
+				plotPixel(x, y, startData[y*120+x]);
+			}
+		}
+
+		// Wait for game to start
+		while (1) {
+			if (!((*KEYS) & KEY_START)) {
+				break;
+			}
+		}
+
+		// Load the background image palette
+		for(loop = 0; loop < 256; loop++) {
+			paletteMem[loop] = modusPalette[loop];
+		}
+
 		// Draw the background image
 		for(y = 0; y < 160; y++) {
 			for(x = 0; x < 120; x++) {
@@ -76,13 +97,6 @@ int main(void) {
 		for (x = 10; x < 111; x++) {
 			plotPixel(x, 10, whitePixel);
 			plotPixel(x, 150, whitePixel);
-		}
-
-		// Wait for game to start
-		while (1) {
-			if (!((*KEYS) & KEY_START)) {
-				break;
-			}
 		}
 
 		loop = 0;
