@@ -45,6 +45,32 @@ u16 getPixel(int x, int y) {
 	return videoBuffer[(y) * 120 + (x)];
 }
 
+// Paint an image on the screen
+void paintImage(u16 *imgPalette, u16 *imgData) {
+	int x, y;
+
+	// Load the start image palette
+	for(x = 0; x < 256; x++) {
+		paletteMem[x] = imgPalette[x];
+	}
+
+	// Draw the image
+	for(y = 0; y < 160; y++) {
+		for(x = 0; x < 120; x++) {
+			plotPixel(x, y, imgData[y*120+x]);
+		}
+	}
+}
+
+// Wait for the start button to be pressed
+void waitForStart() {
+	while (1) {
+		if (!((*KEYS) & KEY_START)) {
+			break;
+		}
+	}
+}
+
 // Entry point
 int main(void) {
 	int x, y, blockX, blockY, loop, dir;
@@ -53,39 +79,15 @@ int main(void) {
 	// Set display mode 4
 	REG_DISPCNT = MODE_4 | BG2_ENABLE;
 
+	// First time show a start screen
+	paintImage(startPalette, startData);
+
+	waitForStart();
 
 	// Infinite game loop
 	while(1) {
-		// Load the start image palette
-		for(loop = 0; loop < 256; loop++) {
-			paletteMem[loop] = startPalette[loop];
-		}
-
-		// Draw the start image
-		for(y = 0; y < 160; y++) {
-			for(x = 0; x < 120; x++) {
-				plotPixel(x, y, startData[y*120+x]);
-			}
-		}
-
-		// Wait for game to start
-		while (1) {
-			if (!((*KEYS) & KEY_START)) {
-				break;
-			}
-		}
-
-		// Load the background image palette
-		for(loop = 0; loop < 256; loop++) {
-			paletteMem[loop] = modusPalette[loop];
-		}
-
-		// Draw the background image
-		for(y = 0; y < 160; y++) {
-			for(x = 0; x < 120; x++) {
-				plotPixel(x,y,modusData[y*120+x]);
-			}
-		}
+		// Load the background image
+		paintImage(modusPalette, modusData);
 
 		// Draw the border around the playfield - vertical lines
 		for (y = 10; y < 150; y++) {
@@ -156,6 +158,9 @@ int main(void) {
 				loop++;
 			}
 		}
+
+		// TODO: Display game over screen
+		waitForStart();
 	}
 
 	// This is unreachable but keeps compiler happy as it sees one
