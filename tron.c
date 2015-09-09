@@ -18,9 +18,10 @@ typedef unsigned long u32;
 #include "modus.h"
 #include "start.h"
 
+// Useful macro for color encoding
 #define RGB16(r,g,b) ((r)+(g<<5)+(b<<10))
 
-// Video mode 4
+// Constants for setting up Gameboy Video Mode 4
 #define REG_DISPCNT *(u32*)0x4000000
 #define MODE_4 0x4
 #define BG2_ENABLE 0x400
@@ -82,6 +83,7 @@ int main(void) {
 	// First time show a start screen
 	paintImage(startPalette, startData);
 
+	// Hang out until the start button is pressed
 	waitForStart();
 
 	// Infinite game loop
@@ -111,8 +113,7 @@ int main(void) {
 		dir = rand() % 3;
 
 		// In game loop
-		while (1)
-		{
+		while (1) {
 			// Only sample keys every 4000 iterations to slow game down
 			if (loop == 4000) {
 				if (!((*KEYS) & KEY_UP)) {
@@ -155,15 +156,19 @@ int main(void) {
 				plotPixel(blockX, blockY, whitePixel);
 				loop = 0;
 			} else {
+				// Just burning some time up
 				loop++;
 			}
 		}
 
-		// TODO: Display game over screen
+		// Useful enhancement would be to display a score and 
+		// game over screen here.  As is, just wait for user 
+		// to press start and run the game again.
 		waitForStart();
 	}
 
 	// This is unreachable but keeps compiler happy as it sees one
-	// path through main that could potentially return an int
+	// path through main that could potentially return an int and 
+	// main's signature has an int return type.
 	return 0;
 }
