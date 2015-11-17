@@ -114,8 +114,8 @@ int main(void) {
 
 		// In game loop
 		while (1) {
-			// Only sample keys every 4000 iterations to slow game down
-			if (loop == 4000) {
+			// Only sample keys every 5000 iterations to slow game down
+			if (loop == 5000) {
 				if (!((*KEYS) & KEY_UP)) {
 					dir = DIR_UP;
 				}
@@ -161,14 +161,15 @@ int main(void) {
 			}
 		}
 
-		// Useful enhancement would be to display a score and 
-		// game over screen here.  As is, just wait for user 
-		// to press start and run the game again.
+		// Useful enhancement would be to display a score and
+		// game over screen here.  As is, just show the start
+		// screen and run the game again when user hits start.
+		paintImage(startPalette, startData);
 		waitForStart();
 	}
 
 	// This is unreachable but keeps compiler happy as it sees one
-	// path through main that could potentially return an int and 
+	// path through main that could potentially return an int and
 	// main's signature has an int return type.
 	return 0;
 }
