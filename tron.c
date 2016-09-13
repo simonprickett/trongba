@@ -11,6 +11,8 @@
 typedef unsigned short u16;
 typedef unsigned long u32;
 
+#include <stdlib.h>
+
 // Definitions for keypad register and addresses
 #include "keypad.h"
 
@@ -47,7 +49,7 @@ u16 getPixel(int x, int y) {
 }
 
 // Paint an image on the screen
-void paintImage(u16 *imgPalette, u16 *imgData) {
+void paintImage(const u16 *imgPalette, const u16 *imgData) {
 	int x, y;
 
 	// Load the start image palette
